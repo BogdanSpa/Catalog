@@ -4,6 +4,6 @@ namespace CatalogFeature.GetSubjectsForCatalogUseCase
 {
     public interface IGetSubjectsForCatalog
     {
-        IQueryable<GetSubjectForCatalogResponse> GetSubjects(int catalogID);
+        IEnumerable<GetSubjectForCatalogResponse> GetSubjects(int catalogID);
     }
 }

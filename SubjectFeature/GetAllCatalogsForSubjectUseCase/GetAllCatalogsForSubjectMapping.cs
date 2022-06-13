@@ -13,6 +13,7 @@ namespace SubjectFeature.GetAllCatalogsForSubjectUseCase
         public GetAllCatalogsForSubjectMapping()
         {
             CreateMap<GetAllCatalogsForSubjectResponse, Catalog>().ReverseMap();
+            CreateMap<IQueryable<GetAllCatalogsForSubjectResponse>, IQueryable<Catalog>>().ReverseMap();  
         }
     }
 }

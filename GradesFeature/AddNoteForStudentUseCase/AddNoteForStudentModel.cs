@@ -10,7 +10,7 @@ namespace GradesFeature.AddNoteForStudentUseCase
     {
        public int StudentId { get; set; }
        public int MaterieId { get; set; }
-       public byte Note { get; set; }
+       public byte Nota { get; set; }
        public int CatalogId { get; set; }
     }
 }

@@ -3,8 +3,6 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SubjectFeature.AddSubjectToCatalogUseCase;
-using SubjectFeature.AddSubjectToCatalogUseCase.BusinessValidations;
-using SubjectFeature.AddSubjectToCatalogUseCase.Commands;
 using SubjectFeature.CrudUsecase;
 using SubjectFeature.GetAllCatalogsForSubject;
 using System;
@@ -47,7 +45,7 @@ namespace SubjectFeature.Startup
         public static void GetAllCatalogForSubjectUseCase(this IServiceCollection service)
         {
             service.AddScoped<IGetAllCatalogForSubject, GetAllCatalogForSubject>();
-            service.AddScoped<ISubjectIdValidation, SubjectIdValidation>();
+            service.AddScoped<GetAllCatalogsForSubjectUseCase.BusinessValidations.ISubjectIdValidation, GetAllCatalogsForSubjectUseCase.BusinessValidations.SubjectIdValidation>();
         }
 
         public static void CrudUseCase(this IServiceCollection service)
@@ -58,9 +56,9 @@ namespace SubjectFeature.Startup
         public static void AddSubjectToCatalogUseCase(this IServiceCollection service)
         {
             service.AddScoped<IAddSubjectToCatalog, AddSubjectToCatalog>();
-            service.AddScoped<IInsertIntoSubjectCatalog, InsertIntoSubjectCatalog>();
-            service.AddScoped<ICatalogIdValidation, CatalogIdValidation>();
-            service.AddScoped<ISubjectIdValidation, SubjectIdValidation>();
+            service.AddScoped<AddSubjectToCatalogUseCase.Commands.IInsertIntoSubjectCatalog, AddSubjectToCatalogUseCase.Commands.InsertIntoSubjectCatalog>();
+            service.AddScoped<AddSubjectToCatalogUseCase.BusinessValidations.ICatalogIdValidation, AddSubjectToCatalogUseCase.BusinessValidations.CatalogIdValidation>();
+            service.AddScoped<AddSubjectToCatalogUseCase.BusinessValidations.ISubjectIdValidation, AddSubjectToCatalogUseCase.BusinessValidations.SubjectIdValidation>();
         }
     }
 }

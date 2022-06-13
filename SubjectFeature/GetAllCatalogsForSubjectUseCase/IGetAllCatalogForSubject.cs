@@ -5,6 +5,6 @@ namespace SubjectFeature.GetAllCatalogsForSubject
 {
     public interface IGetAllCatalogForSubject
     {
-        IQueryable<GetAllCatalogsForSubjectResponse> GetAllCatalogsForSubjectId(int id);
+        IEnumerable<GetAllCatalogsForSubjectResponse> GetAllCatalogsForSubjectId(int id);
     }
 }

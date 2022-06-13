@@ -1,9 +1,8 @@
-﻿using CatalogFeature.CrudUsecase;
+﻿
+using CatalogFeature.CrudUsecase;
 using CatalogFeature.GetAverageForEachSubjectUsecase;
-using CatalogFeature.GetAverageForEachSubjectUsecase.BusinessValidations;
 using CatalogFeature.GetNotesForCatalogUsecase;
 using CatalogFeature.GetNotesForSubjectByStudentUseCase;
-using CatalogFeature.GetNotesForSubjectByStudentUseCase.BusinessValidations;
 using CatalogFeature.GetStudentsByCatalogUseCase;
 using CatalogFeature.GetSubjectsForCatalogUseCase;
 using EFORM.Models;
@@ -28,6 +27,7 @@ namespace CatalogFeature.Startup
             service.GetNotesForSubjectByStudentUseCase();
             service.GetStudentsByCatalogUseCase();
             service.GetSubjectsForCatalogUseCase();
+            service.AddNuggets();
         }
 
         public static void AddEFDatabaseConnection(this IServiceCollection service, string efConnectionString)
@@ -44,31 +44,31 @@ namespace CatalogFeature.Startup
         public static void GetAverageForEachSubjectUseCase(this IServiceCollection service)
         {
             service.AddScoped<IGetAverageForEachSubject, GetAverageForEachSubject>();
-            service.AddScoped<ICatalogIdValidation, CatalogIdValidation>();
+            service.AddScoped<GetAverageForEachSubjectUsecase.BusinessValidations.ICatalogIdValidation, GetAverageForEachSubjectUsecase.BusinessValidations.CatalogIdValidation>();
         }
 
         public static void GetNotesForCatalogUseCase(this IServiceCollection service)
         {
             service.AddScoped<IGetNotesForCatalog, GetNotesForCatalog>();
-            service.AddScoped<ICatalogIdValidation, CatalogIdValidation>();
+            service.AddScoped<GetNotesForCatalogUsecase.BusinessValidations.ICatalogIdValidation, GetNotesForCatalogUsecase.BusinessValidations.CatalogIdValidation>();
         }
 
         public static void GetNotesForSubjectByStudentUseCase(this IServiceCollection service)
         {
             service.AddScoped<IGetNotesForSubjectByStudent, GetNotesForSubjectByStudent>();
-            service.AddScoped<IStudentIdValidation, StudentIdValidation>();
+            service.AddScoped<GetNotesForSubjectByStudentUseCase.BusinessValidations.IStudentIdValidation, GetNotesForSubjectByStudentUseCase.BusinessValidations.StudentIdValidation>();
         }
 
         public static void GetStudentsByCatalogUseCase(this IServiceCollection service)
         {
             service.AddScoped<IGetStudentsByCatalog, GetStudentsByCatalog>();
-            service.AddScoped<ICatalogIdValidation, CatalogIdValidation>();
+            service.AddScoped<GetStudentsByCatalogUseCase.BusinessValidation.ICatalogIdValidation, GetStudentsByCatalogUseCase.BusinessValidation.CatalogIdValidation>();
         }
 
         public static void GetSubjectsForCatalogUseCase(this IServiceCollection service)
         {
             service.AddScoped<IGetSubjectsForCatalog, GetSubjectsForCatalog>();
-            service.AddScoped<ICatalogIdValidation, CatalogIdValidation>();
+            service.AddScoped<GetSubjectsForCatalogUseCase.BusinessValidation.ICatalogIdValidation, GetSubjectsForCatalogUseCase.BusinessValidation.CatalogIdValidation>();
         }
 
         public static void AddNuggets(this IServiceCollection service)

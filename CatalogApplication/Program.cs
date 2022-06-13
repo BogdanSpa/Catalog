@@ -10,18 +10,19 @@ using Microsoft.EntityFrameworkCore;
 using EFORM.Models;
 using SubjectFeature.Startup;
 using GradesFeature.Startup;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     EnvironmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
 });
 
-//var logger = new LoggerConfiguration()
-//        .ReadFrom.Configuration(builder.Configuration)
-//        .CreateLogger();
+var logger = new LoggerConfiguration()
+        .ReadFrom.Configuration(builder.Configuration)
+        .CreateLogger();
 
-//builder.Logging.ClearProviders();
-//builder.Logging.AddSerilog(logger);
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 // Add services to the container.
 
 builder.Services.AddControllers();

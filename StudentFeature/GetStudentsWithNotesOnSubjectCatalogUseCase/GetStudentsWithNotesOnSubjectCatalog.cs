@@ -20,16 +20,18 @@ namespace StudentFeature.GetStudentsWithNotesOnSubjectCatalogUseCase
         private readonly ISubjectIdValidation _subjectIdValidation;
         private readonly IMapper _mapper;
         private readonly ILogger<GetStudentsWithNotesOnSubjectCatalog> _logger;
-        public GetStudentsWithNotesOnSubjectCatalog(CatalogHomeworkContext context, ICatalogIdValidation catalogIdValidation, ISubjectIdValidation subjectIdValidation, ILogger<GetStudentsWithNotesOnSubjectCatalog> logger)
+        public GetStudentsWithNotesOnSubjectCatalog(CatalogHomeworkContext context, ICatalogIdValidation catalogIdValidation, ISubjectIdValidation subjectIdValidation, ILogger<GetStudentsWithNotesOnSubjectCatalog> logger, IMapper mapper)
         {
             _context = context;
             _catalogIdValidation = catalogIdValidation;
             _subjectIdValidation = subjectIdValidation;
             _logger = logger;
+            _mapper = mapper;
         }
 
-        public IQueryable<GetStudentsWithNotesOnSubjectCatalogResponse> GetStudentsSubjectNotes(GetStudentsWithNotesOnSubjectCatalogRequest request)
+        public IEnumerable<GetStudentsWithNotesOnSubjectCatalogResponse> GetStudentsSubjectNotes(int subjectID, int catalogID)
         {
+            var request = new GetStudentsWithNotesOnSubjectCatalogRequest { SubjectID = subjectID, CatalogID = catalogID };
             ValidateRequest(request);
 
             ValidateBusinessRules(request.CatalogID, request.SubjectID);
@@ -37,7 +39,7 @@ namespace StudentFeature.GetStudentsWithNotesOnSubjectCatalogUseCase
             return GetStudents(request);
         }
 
-        private IQueryable<GetStudentsWithNotesOnSubjectCatalogResponse> GetStudents(GetStudentsWithNotesOnSubjectCatalogRequest request)
+        private IEnumerable<GetStudentsWithNotesOnSubjectCatalogResponse> GetStudents(GetStudentsWithNotesOnSubjectCatalogRequest request)
         {
             try
             {
@@ -47,7 +49,7 @@ namespace StudentFeature.GetStudentsWithNotesOnSubjectCatalogUseCase
                     .Where(s => s.Nota.MaterieId == subjectID)
                     .Select(s => s.Nota.Student).Distinct();
 
-                var result = _mapper.Map<IQueryable<Student>, IQueryable<GetStudentsWithNotesOnSubjectCatalogResponse>>(query);
+                var result = _mapper.Map<IQueryable<Student>, IEnumerable<GetStudentsWithNotesOnSubjectCatalogResponse>>(query);
 
                 return result;
             }

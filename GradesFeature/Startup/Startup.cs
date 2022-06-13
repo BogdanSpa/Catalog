@@ -1,7 +1,6 @@
 ﻿using EFORM.Models;
 using FluentValidation.AspNetCore;
 using GradesFeature.AddNoteForStudentUseCase;
-using GradesFeature.AddNoteForStudentUseCase.Commands;
 using GradesFeature.CrudUsecase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,7 +42,10 @@ namespace GradesFeature.Startup
         public static void AddNotesForStudentUseCase(this IServiceCollection service)
         {
             service.AddScoped<IAddNoteForStudent, AddNoteForStudent>();
-            service.AddScoped<IInsertNoteForStudent, InsertNoteForStudent>();
+            service.AddScoped<AddNoteForStudentUseCase.Commands.IInsertNoteForStudent, AddNoteForStudentUseCase.Commands.InsertNoteForStudent>();
+            service.AddScoped<AddNoteForStudentUseCase.BusinessValidation.ICatalogIdValidation, AddNoteForStudentUseCase.BusinessValidation.CatalogIdValidation>();
+            service.AddScoped<AddNoteForStudentUseCase.BusinessValidation.ISubjectIdValidation, AddNoteForStudentUseCase.BusinessValidation.SubjectIdValidation>();
+            service.AddScoped<AddNoteForStudentUseCase.BusinessValidation.IStudentIdValidation, AddNoteForStudentUseCase.BusinessValidation.StudentIdValidation>();
         }
 
         public static void CrudUseCase(this IServiceCollection service)

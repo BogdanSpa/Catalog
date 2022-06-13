@@ -21,9 +21,9 @@ namespace SubjectFeature.AddSubjectToCatalogUseCase.Commands
 
         private readonly CatalogHomeworkContext _context;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<InsertIntoSubjectCatalog> _logger;
 
-        public InsertIntoSubjectCatalog(CatalogHomeworkContext context, IMapper mapper, ILogger logger)
+        public InsertIntoSubjectCatalog(CatalogHomeworkContext context, IMapper mapper, ILogger<InsertIntoSubjectCatalog> logger)
         {
             _context = context;
             _mapper = mapper;
@@ -32,7 +32,7 @@ namespace SubjectFeature.AddSubjectToCatalogUseCase.Commands
 
         public int Insert(AddSubjectToCatalogModel request)
         {
-            SubjectCatalog subjectCatalog = _mapper.Map<SubjectCatalog>(request);
+            var subjectCatalog = _mapper.Map<SubjectCatalog>(request);
 
             try
             {

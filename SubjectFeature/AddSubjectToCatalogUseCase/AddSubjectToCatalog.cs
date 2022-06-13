@@ -35,7 +35,7 @@ namespace SubjectFeature.AddSubjectToCatalogUseCase
             ValidateRequest(request);
 
             //2 Validate bussines rules
-            ValidateBusinessRules(request.catalogID, request.subjectID);
+            ValidateBusinessRules(request.CatalogID, request.MaterieID);
 
             //3 Insert into table
             var entityId = InsertSubject(request);

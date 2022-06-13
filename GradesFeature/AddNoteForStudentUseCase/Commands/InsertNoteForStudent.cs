@@ -30,7 +30,7 @@ namespace GradesFeature.AddNoteForStudentUseCase.Commands
         public int InsertNote(AddNoteForStudentModel model)
         {
             var note = _mapper.Map<Note>(model);
-
+            note.IssueDate = DateTime.Now;
             try
             {
                 _context.Notes.Add(note);

@@ -24,11 +24,28 @@ namespace CatalogApplication.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("AddSubjectToCatalog")]
+        [HttpPost("AddSubjectToCatalog")]
         public IActionResult AddSubjectToCatalog(AddSubjectToCatalogModel model)
         {
-            
+            _addSubjectToCatalog.AddSubjectToTheCatalog(model);
             return Ok();
+        }
+
+        [HttpGet("GetAllCatalogsForSubjectId")]
+        public IActionResult GetAllCatalogsForSubjectId(int id)
+        {
+            var result = _getAllCatalogForSubject.GetAllCatalogsForSubjectId(id);
+            return Ok(result);
+        }
+
+        [HttpPost("")]
+        public IActionResult CreateSubject(SubjectModel request)
+        {
+            var result = _subjectService.CreateSubject(request);
+
+            if (result)
+                return Ok();
+            else return BadRequest();
         }
     }
 }

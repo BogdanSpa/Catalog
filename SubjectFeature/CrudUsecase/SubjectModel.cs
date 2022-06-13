@@ -8,7 +8,7 @@ namespace SubjectFeature.CrudUsecase
 {
     public class SubjectModel
     {
-        public int Id { get; set; }
+        
         public string Nume { get; set; } = null!;
         public byte? PredataInAn { get; set; }
     }

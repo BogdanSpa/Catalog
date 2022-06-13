@@ -12,7 +12,7 @@ namespace GradesFeature.AddNoteForStudentUseCase
     {
         public AddNoteForStudentMapping()
         {
-            CreateMap<AddNoteForStudentModel, Note>();
+            CreateMap<AddNoteForStudentModel, Note>().ReverseMap();
         }
     }
 }

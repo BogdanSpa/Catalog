@@ -11,12 +11,12 @@ namespace SubjectFeature.AddSubjectToCatalogUseCase
     {
         public AddSubjectToCatalogValidation()
         {
-            RuleFor(s => s.subjectID)
+            RuleFor(s => s.MaterieID)
                 .NotNull().WithMessage("Subject ID cannot be null")
                 .NotEmpty().WithMessage("Subject ID cannot be empty")
                 .GreaterThan(0).WithMessage("Subject ID must be greater than 0");
             
-            RuleFor(c => c.catalogID)
+            RuleFor(c => c.CatalogID)
                 .NotNull().WithMessage("Catalog ID cannot be null")
                 .NotEmpty().WithMessage("Catalog ID cannot be empty")
                 .GreaterThan(0).WithMessage("Catalog ID must be greater than 0");

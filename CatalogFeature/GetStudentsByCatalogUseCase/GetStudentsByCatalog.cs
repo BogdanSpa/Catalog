@@ -24,7 +24,7 @@ namespace CatalogFeature.GetStudentsByCatalogUseCase
             _mapper = mapper;
             _catalogIdValidation = catalogIdValidation;
         }
-        public IQueryable<GetStudentsByCatalogResponse> GetStudents(int catalogID)
+        public IEnumerable<GetStudentsByCatalogResponse> GetStudents(int catalogID)
         {
             ValidateRequest(catalogID);
 
@@ -32,13 +32,13 @@ namespace CatalogFeature.GetStudentsByCatalogUseCase
 
             return GetAllStudents(catalogID);
         }
-        private IQueryable<GetStudentsByCatalogResponse> GetAllStudents (int catalogID)
+        private IEnumerable<GetStudentsByCatalogResponse> GetAllStudents (int catalogID)
         {
             try
             {
                 var query = _context.NoteLists.Where(n => n.CatalogId == catalogID).Select(s => s.Nota.Student).Distinct();
 
-                var result = _mapper.Map<IQueryable<Student>, IQueryable<GetStudentsByCatalogResponse>>(query);
+                var result = _mapper.Map<IQueryable<Student>, IEnumerable<GetStudentsByCatalogResponse>>(query);
 
                 return result;
             }

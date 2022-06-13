@@ -5,6 +5,6 @@ namespace StudentFeature.GetStudentByClassUseCase
 {
     public interface IGetStudentsByClass
     {
-        IQueryable<GetStudentsByClassResponse> GetStudentsOnClass(string clasa);
+        IEnumerable<GetStudentsByClassResponse> GetStudentsOnClass(string clasa);
     }
 }

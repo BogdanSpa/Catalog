@@ -18,13 +18,15 @@ namespace StudentFeature.GetStudentByClassUseCase
         private readonly IClasaValidation _clasaValidation;
         private readonly IMapper _mapper;
         private readonly ILogger<GetStudentsByClass> _logger;
-        public GetStudentsByClass(CatalogHomeworkContext context, IClasaValidation clasaValidation)
+        public GetStudentsByClass(CatalogHomeworkContext context, IClasaValidation clasaValidation, IMapper mapper, ILogger<GetStudentsByClass> logger)
         {
             _context = context;
             _clasaValidation = clasaValidation;
+            _mapper = mapper;
+            _logger = logger;
         }
         //Ex 1
-        public IQueryable<GetStudentsByClassResponse> GetStudentsOnClass(string clasa)
+        public IEnumerable<GetStudentsByClassResponse> GetStudentsOnClass(string clasa)
         {
             ValidateRequest(clasa);
 
@@ -33,7 +35,7 @@ namespace StudentFeature.GetStudentByClassUseCase
             return GetStudents(clasa);
         }
 
-        private IQueryable<GetStudentsByClassResponse> GetStudents(string clasa)
+        private IEnumerable<GetStudentsByClassResponse> GetStudents(string clasa)
         {
             try
             {
@@ -41,7 +43,7 @@ namespace StudentFeature.GetStudentByClassUseCase
 
                 var query = _context.NoteLists.Where(n => n.CatalogId == IdCatalogForClass).Select(s => s.Nota.Student).Distinct();
 
-                var result = _mapper.Map<IQueryable<Student>, IQueryable<GetStudentsByClassResponse>>(query);
+                var result = _mapper.Map<IQueryable<Student>, IEnumerable<GetStudentsByClassResponse>>(query);
 
                 return result;
             }

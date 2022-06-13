@@ -18,16 +18,19 @@ namespace GradesFeature.AddNoteForStudentUseCase
         private readonly CatalogHomeworkContext _context;
         private readonly ILogger<AddNoteForStudent> _logger;
         private readonly IMapper _mapper;
-        private readonly InsertNoteForStudent _insertNoteForStudent;
+        private readonly IInsertNoteForStudent _insertNoteForStudent;
         private readonly ISubjectIdValidation _subjectIdValidation;
         private readonly ICatalogIdValidation _catalogIdValidation;
         private readonly IStudentIdValidation _studentIdValidation;
-        public AddNoteForStudent(CatalogHomeworkContext context, ILogger<AddNoteForStudent> logger, IMapper mapper, InsertNoteForStudent insertNoteForStudent)
+        public AddNoteForStudent(CatalogHomeworkContext context, ILogger<AddNoteForStudent> logger, IMapper mapper, IInsertNoteForStudent insertNoteForStudent, ISubjectIdValidation subjectIdValidation, ICatalogIdValidation catalogIdValidation, IStudentIdValidation studentIdValidation)
         {
             _context = context;
             _logger = logger;
             _mapper = mapper;
             _insertNoteForStudent = insertNoteForStudent;
+            _subjectIdValidation = subjectIdValidation;
+            _catalogIdValidation = catalogIdValidation;
+            _studentIdValidation = studentIdValidation;
         }
         public bool AddNote(AddNoteForStudentModel request)
         {
@@ -71,7 +74,7 @@ namespace GradesFeature.AddNoteForStudentUseCase
             if (!studentExists)
             {
                 _logger.LogError("Subject doesn't exists when trying to add note for student!");
-                throw new InvalidStudentIdException($"No subject with id: {subjectID} exists in db!");
+                throw new InvalidStudentIdException($"No student with id: {studentID} exists in db!");
             }
         }
 

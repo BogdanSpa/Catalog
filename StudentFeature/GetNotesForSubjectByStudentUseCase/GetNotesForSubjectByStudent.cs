@@ -14,8 +14,8 @@ namespace StudentFeature.GetNotesForSubjectByStudentUseCase
     {
         private readonly CatalogHomeworkContext _context;
         private readonly IStudentIdValidation _studentIdValidation;
-        private readonly ILogger _logger;
-        public GetNotesForSubjectByStudent(CatalogHomeworkContext context, IStudentIdValidation studentIdValidation, ILogger logger)
+        private readonly ILogger<GetNotesForSubjectByStudent> _logger;
+        public GetNotesForSubjectByStudent(CatalogHomeworkContext context, IStudentIdValidation studentIdValidation, ILogger<GetNotesForSubjectByStudent> logger)
         {
             _context = context;
             _studentIdValidation = studentIdValidation;

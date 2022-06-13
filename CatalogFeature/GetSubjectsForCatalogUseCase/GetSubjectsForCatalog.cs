@@ -25,7 +25,7 @@ namespace CatalogFeature.GetSubjectsForCatalogUseCase
             _mapper = mapper;
         }
 
-        public IQueryable<GetSubjectForCatalogResponse> GetSubjects(int catalogID)
+        public IEnumerable<GetSubjectForCatalogResponse> GetSubjects(int catalogID)
         {
             ValidateRequest(catalogID);
 
@@ -33,13 +33,13 @@ namespace CatalogFeature.GetSubjectsForCatalogUseCase
 
             return GetAllSubjects(catalogID);
         }
-        private IQueryable<GetSubjectForCatalogResponse> GetAllSubjects(int catalogID)
+        private IEnumerable<GetSubjectForCatalogResponse> GetAllSubjects(int catalogID)
         {
             try
             {
                 var query = _context.NoteLists.Where(x => x.CatalogId == catalogID).Select(x => x.Nota.Materie).Distinct();
 
-                var result = _mapper.Map<IQueryable<Subject>, IQueryable<GetSubjectForCatalogResponse>>(query);
+                var result = _mapper.Map<IQueryable<Subject>, IEnumerable<GetSubjectForCatalogResponse>>(query);
 
                 return result;
             }

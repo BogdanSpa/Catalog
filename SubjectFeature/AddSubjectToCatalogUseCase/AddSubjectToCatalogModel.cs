@@ -8,7 +8,7 @@ namespace SubjectFeature.AddSubjectToCatalogUseCase
 {
     public class AddSubjectToCatalogModel
     {
-        public int subjectID { get; set; }
-        public int catalogID { get; set; }
+        public int MaterieID { get; set; }
+        public int CatalogID { get; set; }
     }
 }

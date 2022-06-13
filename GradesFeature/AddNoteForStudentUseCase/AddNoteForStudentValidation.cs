@@ -25,7 +25,7 @@ namespace GradesFeature.AddNoteForStudentUseCase
                 .NotEmpty().WithMessage("Catalog ID cannot be empty")
                 .GreaterThan(0).WithMessage("Catalog ID cannot be 0");
 
-            RuleFor(n => n.Note)
+            RuleFor(n => n.Nota)
                 .NotNull().WithMessage("Student ID cannot be null")
                 .NotEmpty().WithMessage("Student ID cannot be empty");
                 //.GreaterThan(0).WithMessage("Student ID cannot be 0");

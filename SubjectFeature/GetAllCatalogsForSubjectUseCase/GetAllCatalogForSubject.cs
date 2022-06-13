@@ -27,7 +27,7 @@ namespace SubjectFeature.GetAllCatalogsForSubject
         }
 
         //8
-        public IQueryable<GetAllCatalogsForSubjectResponse> GetAllCatalogsForSubjectId(int id)
+        public IEnumerable<GetAllCatalogsForSubjectResponse> GetAllCatalogsForSubjectId(int id)
         {
             //1 Validate request
             ValidateRequest(id);
@@ -37,11 +37,11 @@ namespace SubjectFeature.GetAllCatalogsForSubject
             return GetCatalogs(id);
         }
 
-        private IQueryable<GetAllCatalogsForSubjectResponse> GetCatalogs(int id)
+        private IEnumerable<GetAllCatalogsForSubjectResponse> GetCatalogs(int id)
         {
             var query = _context.SubjectCatalogs.Where(m => m.MaterieId == id).Select(m => m.Catalog);
             
-            var result = _mapper.Map<IQueryable<Catalog>, IQueryable<GetAllCatalogsForSubjectResponse>>(query);
+            var result = _mapper.Map<IQueryable<Catalog>, IEnumerable<GetAllCatalogsForSubjectResponse>>(query);
             return result;
         }
 
