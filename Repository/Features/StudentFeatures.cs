@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Repository.IFeatures;
 namespace Repository.Features
 {
     public class StudentFeatures : IStudentFeatures

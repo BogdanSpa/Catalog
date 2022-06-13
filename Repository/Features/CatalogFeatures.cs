@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using EFORM.Models;
-
+using Repository.IFeatures;
 namespace Repository.Features
 {
     public class CatalogFeatures : ICatalogFeatures
