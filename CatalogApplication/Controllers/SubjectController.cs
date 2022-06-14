@@ -24,28 +24,38 @@ namespace CatalogApplication.Controllers
             _mapper = mapper;
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost("AddSubjectToCatalog")]
         public IActionResult AddSubjectToCatalog(AddSubjectToCatalogModel model)
         {
             _addSubjectToCatalog.AddSubjectToTheCatalog(model);
-            return Ok();
+            return Ok("Added");
         }
 
         [HttpGet("GetAllCatalogsForSubjectId")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetAllCatalogsForSubjectId(int id)
         {
             var result = _getAllCatalogForSubject.GetAllCatalogsForSubjectId(id);
+
             return Ok(result);
         }
 
-        [HttpPost("")]
+        [HttpPost("CreateSubject")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult CreateSubject(SubjectModel request)
         {
             var result = _subjectService.CreateSubject(request);
 
-            if (result)
-                return Ok();
-            else return BadRequest();
+            return Created("api/Subject", request.Nume);
         }
     }
 }

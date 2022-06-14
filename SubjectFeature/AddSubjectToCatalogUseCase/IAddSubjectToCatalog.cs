@@ -2,6 +2,6 @@
 {
     public interface IAddSubjectToCatalog
     {
-        string AddSubjectToTheCatalog(AddSubjectToCatalogModel model);
+        bool AddSubjectToTheCatalog(AddSubjectToCatalogModel model);
     }
 }

@@ -4,7 +4,7 @@ namespace CatalogFeature.CrudUsecase
 {
     public interface ICatalogService
     {
-        bool CreateCatalog(Catalog catalog);
+        bool CreateCatalog(CatalogModel catalog);
         Catalog GetCatalog(int id);
         Catalog GetCatalog(string clasa);
         bool RemoveCatalog(int id);

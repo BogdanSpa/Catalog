@@ -17,6 +17,10 @@ namespace CatalogApplication.Controllers
             _addNoteForStudent = addNoteForStudent;
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost("AddNoteForStudent")]
         public IActionResult AddNoteForStudent(AddNoteForStudentModel model)
         {

@@ -29,7 +29,7 @@ namespace SubjectFeature.AddSubjectToCatalogUseCase
             _subjectIdValidation = subjectIdValidation;
         }
 
-        public string AddSubjectToTheCatalog(AddSubjectToCatalogModel request)
+        public bool AddSubjectToTheCatalog(AddSubjectToCatalogModel request)
         {
             //1 Validate request
             ValidateRequest(request);
@@ -43,8 +43,7 @@ namespace SubjectFeature.AddSubjectToCatalogUseCase
             //4 Validate entityID
             ValidateSubjectCatalogID(entityId);
 
-            return "Subject was added to the catalog!";
-
+            return true;
         }
 
         private void ValidateRequest(AddSubjectToCatalogModel request)

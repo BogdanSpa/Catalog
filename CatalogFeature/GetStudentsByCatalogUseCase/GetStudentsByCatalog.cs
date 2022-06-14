@@ -45,7 +45,7 @@ namespace CatalogFeature.GetStudentsByCatalogUseCase
             catch (Exception ex)
             {
                 _logger.LogError("An internal server error has occured when trying to call GetStudents");
-                throw new GetAllStudentsInternalServerError("There was an internal server error when trying to get data from db");
+                throw new GetAllStudentsInternalServerErrorException("There was an internal server error when trying to get data from db");
             }
         }
 

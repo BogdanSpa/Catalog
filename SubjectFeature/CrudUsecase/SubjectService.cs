@@ -1,6 +1,7 @@
 ﻿
 using AutoMapper;
 using EFORM.Models;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace SubjectFeature.CrudUsecase
     {
         private readonly CatalogHomeworkContext _context;
         private readonly IMapper _mapper;
+        private readonly ILogger<SubjectService> _logger;
         public SubjectService(CatalogHomeworkContext context, IMapper mapper)
         {
             _context = context;
@@ -30,9 +32,9 @@ namespace SubjectFeature.CrudUsecase
                 _context.SaveChanges();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                _logger.LogError($"Subject cant be added error: {ex}");
                 return false;
             }
         }

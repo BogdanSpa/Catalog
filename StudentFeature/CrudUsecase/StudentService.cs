@@ -1,4 +1,6 @@
-﻿using EFORM.Models;
+﻿using AutoMapper;
+using EFORM.Models;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +12,19 @@ namespace StudentFeature.CrudUsecase
     public class StudentService : IStudentService
     {
         private readonly CatalogHomeworkContext _context;
+        private readonly IMapper _mapper;
+        private readonly ILogger<StudentService> _logger;
         public StudentService(CatalogHomeworkContext context)
         {
             _context = context;
         }
 
-        public bool CreateStudent(Student student)
+        public bool CreateStudent(StudentModel request)
         {
-            if (student == null)
+            if (request == null)
                 return false;
+
+            var student = _mapper.Map<Student>(request);
 
             try
             {
@@ -26,9 +32,9 @@ namespace StudentFeature.CrudUsecase
                 _context.SaveChanges();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                _logger.LogError($"Can't add student error: {ex}");
                 return false;
             }
         }

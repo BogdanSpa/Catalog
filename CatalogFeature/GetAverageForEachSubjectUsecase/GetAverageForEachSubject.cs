@@ -51,7 +51,7 @@ namespace CatalogFeature.GetAverageForEachSubjectUsecase
             catch (Exception ex)
             {
                 _logger.LogError("Internal server error when trying to get data from db at GetAverageForSubjects");
-                throw new GetAveareForSubjectsInternalServerErrorException("The data cannot be fetched from db!");
+                throw new GetAverageForSubjectsInternalServerErrorException("The data cannot be fetched from db!");
             }
         }
 

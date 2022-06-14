@@ -48,7 +48,7 @@ namespace CatalogFeature.GetNotesForCatalogUsecase
             catch (Exception ex)
             {
                 _logger.LogError("An internal server error has occured when trying to get data from db at GetNotesForCatalog");
-                throw new GetNotesForCatalogInternalErrorException("There was an internal error when trying to get data from db!");
+                throw new GetNotesForCatalogInternalServerErrorException("There was an internal error when trying to get data from db!");
             }
         }
         private void ValidateBusinessRules(int catalogID)

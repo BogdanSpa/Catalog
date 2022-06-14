@@ -44,7 +44,7 @@ namespace CatalogFeature.GetNotesForSubjectByStudentUseCase
             catch(Exception ex)
             {
                 _logger.LogError("Internal server error when trying to get data from db at GetNotesForSubject!");
-                throw new GetNotesForSubjectInternalServerError("Error when trying to fetch data from db!");
+                throw new GetNotesForSubjectInternalServerErrorException("Error when trying to fetch data from db!");
             }
         }
 

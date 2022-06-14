@@ -33,6 +33,9 @@ namespace CatalogApplication.Controllers
             _getSubjectsForCatalog = getSubjectsForCatalog;
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("GetAverageForEachSubject")]
         public  IActionResult GetAverageForEachSubject(int id)
         {
@@ -41,6 +44,10 @@ namespace CatalogApplication.Controllers
             return Ok(result);
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("GetNotesForCatalog")]
         public IActionResult GetNotesForCatalog(int id)
         {
@@ -49,6 +56,10 @@ namespace CatalogApplication.Controllers
             return Ok(result);
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("GetNotesForSubjectByStudent")]
         public IActionResult GetNotesForSubjectByStudent(int id)
         {
@@ -57,6 +68,10 @@ namespace CatalogApplication.Controllers
             return Ok(result);
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("GetStudentsByCatalog")]
         public IActionResult GetStudentsByCatalog(int id)
         {
@@ -65,12 +80,26 @@ namespace CatalogApplication.Controllers
             return Ok(result);
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("GetSujectsForCatalog")]
         public IActionResult GetSubjectsForCatalog(int id)
         {
             var result = _getSubjectsForCatalog.GetSubjects(id);
 
             return Ok(result);
+        }
+
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [HttpPost]
+        public IActionResult CreateCatalog(CatalogModel model)
+        {
+            _context.CreateCatalog(model);
+            return Created("api/catalog", model.Clasa);
         }
     }
 }

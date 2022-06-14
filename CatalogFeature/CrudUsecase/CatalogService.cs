@@ -1,4 +1,6 @@
-﻿using EFORM.Models;
+﻿using AutoMapper;
+using EFORM.Models;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +12,22 @@ namespace CatalogFeature.CrudUsecase
     public class CatalogService : ICatalogService
     {
         private readonly CatalogHomeworkContext _context;
+        private readonly ILogger<CatalogService> _logger;
+        private readonly IMapper _mapper;
 
-        public CatalogService(CatalogHomeworkContext context)
+        public CatalogService(CatalogHomeworkContext context, ILogger<CatalogService> logger, IMapper mapper)
         {
             _context = context;
+            _logger = logger;
+            _mapper = mapper;
         }
 
-        public bool CreateCatalog(Catalog catalog)
+        public bool CreateCatalog(CatalogModel model)
         {
-            if (catalog == null)
+            if (model == null)
                 return false;
+
+            var catalog = _mapper.Map<Catalog>(model);
 
             try
             {
@@ -29,6 +37,7 @@ namespace CatalogFeature.CrudUsecase
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Catalog cant be added error: {ex}");
                 return false;
             }
         }

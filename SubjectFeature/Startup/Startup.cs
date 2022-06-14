@@ -18,7 +18,6 @@ namespace SubjectFeature.Startup
     {
         public static void AddSubjectFeatures(this IServiceCollection service, string efConnectionString)
         {
-
             service.AddNuggets();
             service.AddEFDatabaseConnection(efConnectionString);
             service.GetAllCatalogForSubjectUseCase();

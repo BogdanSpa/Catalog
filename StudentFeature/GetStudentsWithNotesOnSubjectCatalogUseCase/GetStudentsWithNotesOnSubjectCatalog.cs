@@ -68,7 +68,7 @@ namespace StudentFeature.GetStudentsWithNotesOnSubjectCatalogUseCase
             if (!result.IsValid)
             {
                 _logger.LogError("Model is not valid");
-                throw new GetStudentsWithNotesOnSubjectException("The model for requesting notes for each subject for each student is invalid!");
+                throw new GetStudentsWithNotesOnSubjectInvalidException("The model for requesting notes for each subject for each student is invalid!");
             }
         }
         private void ValidateBusinessRules(int catalogID, int subjectID)

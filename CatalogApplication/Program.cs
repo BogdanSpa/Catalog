@@ -11,6 +11,7 @@ using EFORM.Models;
 using SubjectFeature.Startup;
 using GradesFeature.Startup;
 using Serilog;
+using CatalogApplication.Middleware;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -50,7 +51,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.MapControllers();
 
 app.Run();
