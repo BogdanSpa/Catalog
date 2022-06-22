@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EFORM.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SharedLibrary.SubjectFeatureException;
 using SubjectFeature.AddSubjectToCatalogUseCase.BusinessValidations;
@@ -27,21 +28,23 @@ namespace SubjectFeature.GetAllCatalogsForSubject
         }
 
         //8
-        public IEnumerable<GetAllCatalogsForSubjectResponse> GetAllCatalogsForSubjectId(int id)
+        public async Task<IEnumerable<GetAllCatalogsForSubjectResponse>> GetAllCatalogsForSubjectId(int id)
         {
             //1 Validate request
             ValidateRequest(id);
             //2 Validate business rules
             ValidateBusinessRules(id);
             //3 Get result
-            return GetCatalogs(id);
+            var result = await GetCatalogs(id);
+
+            return result;
         }
 
-        private IEnumerable<GetAllCatalogsForSubjectResponse> GetCatalogs(int id)
+        private async Task<IEnumerable<GetAllCatalogsForSubjectResponse>> GetCatalogs(int id)
         {
-            var query = _context.SubjectCatalogs.Where(m => m.MaterieId == id).Select(m => m.Catalog);
-            
-            var result = _mapper.Map<IQueryable<Catalog>, IEnumerable<GetAllCatalogsForSubjectResponse>>(query);
+            var query = await _context.SubjectCatalogs.Where(m => m.MaterieId == id).Select(m => m.Catalog).ToListAsync();
+
+            var result = _mapper.Map<IEnumerable<Catalog>, IEnumerable<GetAllCatalogsForSubjectResponse>>(query);
             return result;
         }
 

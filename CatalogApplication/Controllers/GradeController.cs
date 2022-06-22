@@ -22,15 +22,16 @@ namespace CatalogApplication.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost("AddNoteForStudent")]
-        public IActionResult AddNoteForStudent(AddNoteForStudentModel model)
+        public async Task<IActionResult> AddNoteForStudent(AddNoteForStudentModel model)
         {
-            bool isValid = _addNoteForStudent.AddNote(model);
+            bool isValid = await _addNoteForStudent.AddNote(model);
 
             if(isValid)
             {
                 return Ok("Note added");
             }
-            return Ok("Note can not be added!");
+            
+            return BadRequest("Note can not be added!");
         }
     }
 }

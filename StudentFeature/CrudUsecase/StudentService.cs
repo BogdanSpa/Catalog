@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EFORM.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,14 @@ namespace StudentFeature.CrudUsecase
         private readonly CatalogHomeworkContext _context;
         private readonly IMapper _mapper;
         private readonly ILogger<StudentService> _logger;
-        public StudentService(CatalogHomeworkContext context)
+        public StudentService(CatalogHomeworkContext context, IMapper mapper, ILogger<StudentService> logger)
         {
             _context = context;
+            _mapper = mapper;
+            _logger = logger;
         }
 
-        public bool CreateStudent(StudentModel request)
+        public async Task<bool> CreateStudent(StudentModel request)
         {
             if (request == null)
                 return false;
@@ -28,8 +31,8 @@ namespace StudentFeature.CrudUsecase
 
             try
             {
-                _context.Students.Add(student);
-                _context.SaveChanges();
+                await _context.Students.AddAsync(student);
+                await  _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
@@ -39,21 +42,21 @@ namespace StudentFeature.CrudUsecase
             }
         }
 
-        public Student GetStudent(int id)
+        public async Task<Student> GetStudent(int id)
         {
-            return _context.Students.FirstOrDefault(s => s.Id == id);
+            return await _context.Students.AsNoTracking().FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public bool UpdateStudent(Student student)
+        public async Task<bool> UpdateStudent(Student student)
         {
-            var studentToBeUpdated = _context.Students.FirstOrDefault(s => s.Id == student.Id);
+            var studentToBeUpdated = await GetStudent(student.Id);
 
             try
             {
                 if (studentToBeUpdated != null)
                 {
                     _context.Students.Update(studentToBeUpdated);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
 
                     return true;
                 }
@@ -67,16 +70,16 @@ namespace StudentFeature.CrudUsecase
             return false;
         }
 
-        public bool DeleteStudent(int id)
+        public async Task<bool> DeleteStudent(int id)
         {
-            var student = GetStudent(id);
+            var student = await GetStudent(id);
 
             try
             {
                 if (student != null)
                 {
                     _context.Students.Remove(student);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return true;
                 }
             }
@@ -89,12 +92,12 @@ namespace StudentFeature.CrudUsecase
         }
 
         //Ex 1
-        public IQueryable<Student> GetStudentsByClass(int idCatalog)
-        {
+        //public async Task<IQueryable<Student>> GetStudentsByClass(int idCatalog)
+        //{
 
-            var query = _context.NoteLists.Where(n => n.CatalogId == idCatalog).Select(s => s.Nota.Student).Distinct();
-            return query;
-        }
+        //    var query = _context.NoteLists.Where(n => n.CatalogId == idCatalog).Select(s => s.Nota.Student).Distinct();
+        //    return query;
+        //}
 
 
     }

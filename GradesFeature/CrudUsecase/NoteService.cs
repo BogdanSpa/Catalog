@@ -1,4 +1,5 @@
 ﻿using EFORM.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +16,15 @@ namespace GradesFeature.CrudUsecase
         {
             _context = context;
         }
-        public bool CreateNote(Note nota)
+        public async Task<bool> CreateNote(Note nota)
         {
             if (nota == null)
                 return false;
 
             try
             {
-                _context.Notes.Add(nota);
-                _context.SaveChanges();
+                await _context.Notes.AddAsync(nota);
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception)
@@ -32,21 +33,21 @@ namespace GradesFeature.CrudUsecase
             }
         }
 
-        public Note GetNote(int id)
+        public async Task<Note> GetNote(int id)
         {
-            return _context.Notes.FirstOrDefault(s => s.Id == id);
+            return await _context.Notes.FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public bool UpdateNote(Student student)
+        public async Task<bool> UpdateNote(Student student)
         {
-            var noteToBeUpdated = _context.Notes.FirstOrDefault(s => s.Id == student.Id);
+            var noteToBeUpdated = await _context.Notes.FirstOrDefaultAsync(s => s.Id == student.Id);
 
             try
             {
                 if (noteToBeUpdated != null)
                 {
                     _context.Notes.Update(noteToBeUpdated);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
 
                     return true;
                 }
@@ -60,16 +61,16 @@ namespace GradesFeature.CrudUsecase
             return false;
         }
 
-        public bool DeleteNote(int id)
+        public async Task<bool> DeleteNote(int id)
         {
-            var nota = GetNote(id);
+            var nota = await GetNote(id);
 
             try
             {
                 if (nota != null)
                 {
                     _context.Notes.Remove(nota);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return true;
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using EFORM.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SharedLibrary.StudentFeatureException;
 using StudentFeature.GetNotesForSubjectByStudentUseCase.BusinessValidations;
@@ -22,17 +23,19 @@ namespace StudentFeature.GetNotesForSubjectByStudentUseCase
             _logger = logger;
         }
 
-        public IQueryable<GetNotesForSubjectStudentModel> GetNotesForSubjectByStudentId(int studentID)
+        public async Task<IEnumerable<GetNotesForSubjectStudentModel>> GetNotesForSubjectByStudentId(int studentID)
         {
             ValidateRequest(studentID);
 
             ValidateBusinessRules(studentID);
 
-            return GetNotes(studentID);
+            var result = await GetNotes(studentID);
+
+            return result;
         }
-        private IQueryable<GetNotesForSubjectStudentModel> GetNotes(int id)
+        private async Task<IEnumerable<GetNotesForSubjectStudentModel>> GetNotes(int id)
         {
-            var query = _context.Notes.Where(n => n.StudentId == id);
+            var query = await _context.Notes.Where(n => n.StudentId == id).Include(m => m.Materie).AsNoTracking().ToListAsync();
 
             var result = query.GroupBy(n => n.Materie.Nume,
                 (k, c) => new GetNotesForSubjectStudentModel()

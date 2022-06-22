@@ -4,6 +4,6 @@ namespace StudentFeature.GetStudentsWithNotesOnSubjectCatalogUseCase
 {
     public interface IGetStudentsWithNotesOnSubjectCatalog
     {
-        IEnumerable<GetStudentsWithNotesOnSubjectCatalogResponse> GetStudentsSubjectNotes(int subjectID, int catalogID);
+        Task<IEnumerable<GetStudentsWithNotesOnSubjectCatalogResponse>> GetStudentsSubjectNotes(int subjectID, int catalogID);
     }
 }

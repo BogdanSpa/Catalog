@@ -32,22 +32,22 @@ namespace GradesFeature.AddNoteForStudentUseCase
             _catalogIdValidation = catalogIdValidation;
             _studentIdValidation = studentIdValidation;
         }
-        public bool AddNote(AddNoteForStudentModel request)
+        public async Task<bool> AddNote(AddNoteForStudentModel request)
         {
             ValidateRequest(request);
 
             ValidateBusinessRules(request.CatalogId, request.MaterieId, request.StudentId);
 
-            var noteID = InsertNote(request);
+            var noteID = await InsertNote(request);
 
             ValidateNoteId(noteID);
 
             return true;
         }
 
-        private int InsertNote(AddNoteForStudentModel model)
+        private async Task<int> InsertNote(AddNoteForStudentModel model)
         {
-            var noteID = _insertNoteForStudent.InsertNote(model);
+            var noteID = await _insertNoteForStudent.InsertNote(model);
 
             return noteID;
         }

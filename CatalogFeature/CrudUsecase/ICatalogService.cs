@@ -4,10 +4,10 @@ namespace CatalogFeature.CrudUsecase
 {
     public interface ICatalogService
     {
-        bool CreateCatalog(CatalogModel catalog);
-        Catalog GetCatalog(int id);
-        Catalog GetCatalog(string clasa);
-        bool RemoveCatalog(int id);
-        bool UpdateCatalog(Catalog catalog);
+        Task<bool> CreateCatalog(CatalogModel catalog);
+        Task<Catalog> GetCatalogById(int id);
+        Task<Catalog> GetCatalogByClass(string clasa);
+        Task<bool> RemoveCatalog(int id);
+        Task<bool> UpdateCatalog(Catalog catalog);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EFORM.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace CatalogFeature.CrudUsecase
             _mapper = mapper;
         }
 
-        public bool CreateCatalog(CatalogModel model)
+        public async Task<bool> CreateCatalog(CatalogModel model)
         {
             if (model == null)
                 return false;
@@ -31,8 +32,8 @@ namespace CatalogFeature.CrudUsecase
 
             try
             {
-                _context.Catalogs.Add(catalog);
-                _context.SaveChanges();
+                await _context.Catalogs.AddAsync(catalog);
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
@@ -42,25 +43,25 @@ namespace CatalogFeature.CrudUsecase
             }
         }
 
-        public Catalog GetCatalog(int id)
+        public async Task<Catalog> GetCatalogById(int id)
         {
-            return _context.Catalogs.FirstOrDefault(c => c.Id == id);
+            return await _context.Catalogs.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public Catalog GetCatalog(string clasa)
+        public async Task<Catalog> GetCatalogByClass(string clasa)
         {
-            return _context.Catalogs.FirstOrDefault(c => c.Clasa == clasa);
+            return await _context.Catalogs.FirstOrDefaultAsync(c => c.Clasa == clasa);
         }
-        public bool RemoveCatalog(int id)
+        public async Task<bool> RemoveCatalog(int id)
         {
-            var catalog = GetCatalog(id);
+            var catalog = await GetCatalogById(id);
 
             try
             {
                 if (catalog != null)
                 {
                     _context.Catalogs.Remove(catalog);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
             }
             catch (Exception)
@@ -70,16 +71,16 @@ namespace CatalogFeature.CrudUsecase
             return false;
         }
 
-        public bool UpdateCatalog(Catalog catalog)
+        public async Task<bool> UpdateCatalog(Catalog catalog)
         {
-            var catalogToBeUpdated = _context.Catalogs.FirstOrDefault(c => c.Id == catalog.Id);
+            var catalogToBeUpdated = await GetCatalogById(catalog.Id);
 
             try
             {
                 if (catalogToBeUpdated != null)
                 {
                     _context.Catalogs.Update(catalogToBeUpdated);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     return true;
                 }
             }

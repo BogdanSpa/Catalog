@@ -2,6 +2,6 @@
 {
     public interface IAddNoteForStudent
     {
-        bool AddNote(AddNoteForStudentModel request);
+        Task<bool> AddNote(AddNoteForStudentModel request);
     }
 }

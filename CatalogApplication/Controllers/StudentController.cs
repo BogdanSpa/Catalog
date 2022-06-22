@@ -32,9 +32,9 @@ namespace CatalogApplication.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("GetNotesForSubjectByStudent")]
-        public IActionResult GetNotesForSubjectByStudent(int id)
+        public async Task<IActionResult> GetNotesForSubjectByStudent(int id)
         {
-            var result = _getNotesForSubjectByStudent.GetNotesForSubjectByStudentId(id);
+            var result = await _getNotesForSubjectByStudent.GetNotesForSubjectByStudentId(id);
 
             return Ok(result);
         }
@@ -44,9 +44,9 @@ namespace CatalogApplication.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("GetStudentsByClass")]
-        public IActionResult GetStudentsByClass(string Cls)
+        public async Task<IActionResult> GetStudentsByClass(string Cls)
         {
-            var result = _getStudentsByClass.GetStudentsOnClass(Cls);
+            var result = await _getStudentsByClass.GetStudentsOnClass(Cls);
 
             return Ok(result);
         }
@@ -56,9 +56,9 @@ namespace CatalogApplication.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("GetStudentsWithNotesSubject")]
-        public IActionResult GetStudentsWithNotesOnSubjectCatalog(int subjectID, int catalogID)
+        public async Task<IActionResult> GetStudentsWithNotesOnSubjectCatalog(int subjectID, int catalogID)
         {
-            var result = _getStudentsWithNotesOnSubjectCatalog.GetStudentsSubjectNotes(subjectID, catalogID);
+            var result = await _getStudentsWithNotesOnSubjectCatalog.GetStudentsSubjectNotes(subjectID, catalogID);
 
             return Ok(result);
         }
@@ -67,10 +67,10 @@ namespace CatalogApplication.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost]
-        public IActionResult CreateStudent(StudentModel model)
+        public async Task<IActionResult> CreateStudent(StudentModel model)
         {
-            _context.CreateStudent(model);
-            return Created("api/student", model.Nume);
+            await _context.CreateStudent(model);
+            return Created("api/student", model.Nume + model.Prenume);
         }
 
     }

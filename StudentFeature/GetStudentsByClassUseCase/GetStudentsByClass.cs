@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EFORM.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SharedLibrary.StudentFeatureException;
 using StudentFeature.GetStudentsByClassUseCase;
@@ -26,22 +27,24 @@ namespace StudentFeature.GetStudentByClassUseCase
             _logger = logger;
         }
         //Ex 1
-        public IEnumerable<GetStudentsByClassResponse> GetStudentsOnClass(string clasa)
+        public async Task<IEnumerable<GetStudentsByClassResponse>> GetStudentsOnClass(string clasa)
         {
             ValidateRequest(clasa);
 
             ValidateBusinessRules(clasa);
 
-            return GetStudents(clasa);
+            var result = await GetStudents(clasa);
+            return result;
         }
 
-        private IEnumerable<GetStudentsByClassResponse> GetStudents(string clasa)
+        private async Task<IEnumerable<GetStudentsByClassResponse>> GetStudents(string clasa)
         {
             try
             {
-                var IdCatalogForClass = _context.Catalogs.FirstOrDefault(c => c.Clasa == clasa).Id;
+                var catalogForClass = await _context.Catalogs.FirstOrDefaultAsync(c => c.Clasa == clasa);
+                var catalogId = catalogForClass.Id;
 
-                var query = _context.NoteLists.Where(n => n.CatalogId == IdCatalogForClass).Select(s => s.Nota.Student).Distinct();
+                var query = _context.NoteLists.Where(n => n.CatalogId == catalogId).Select(s => s.Nota.Student).Distinct();
 
                 var result = _mapper.Map<IQueryable<Student>, IEnumerable<GetStudentsByClassResponse>>(query);
 

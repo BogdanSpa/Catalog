@@ -29,22 +29,25 @@ namespace StudentFeature.GetStudentsWithNotesOnSubjectCatalogUseCase
             _mapper = mapper;
         }
 
-        public IEnumerable<GetStudentsWithNotesOnSubjectCatalogResponse> GetStudentsSubjectNotes(int subjectID, int catalogID)
+        public async Task<IEnumerable<GetStudentsWithNotesOnSubjectCatalogResponse>> GetStudentsSubjectNotes(int subjectID, int catalogID)
         {
             var request = new GetStudentsWithNotesOnSubjectCatalogRequest { SubjectID = subjectID, CatalogID = catalogID };
             ValidateRequest(request);
 
             ValidateBusinessRules(request.CatalogID, request.SubjectID);
 
-            return GetStudents(request);
+            var result = await GetStudents(request);
+            return result;
         }
 
-        private IEnumerable<GetStudentsWithNotesOnSubjectCatalogResponse> GetStudents(GetStudentsWithNotesOnSubjectCatalogRequest request)
+        //???
+        private async Task<IEnumerable<GetStudentsWithNotesOnSubjectCatalogResponse>> GetStudents(GetStudentsWithNotesOnSubjectCatalogRequest request)
         {
             try
             {
                 int catalogID = request.CatalogID;
                 int subjectID = request.SubjectID;
+
                 var query = _context.NoteLists.Where(c => c.CatalogId == catalogID).Include(s => s.Nota)
                     .Where(s => s.Nota.MaterieId == subjectID)
                     .Select(s => s.Nota.Student).Distinct();

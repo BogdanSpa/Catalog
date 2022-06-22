@@ -12,7 +12,7 @@ namespace GradesFeature.AddNoteForStudentUseCase.Commands
 {
     public interface IInsertNoteForStudent
     {
-        int InsertNote(AddNoteForStudentModel model);
+        Task<int> InsertNote(AddNoteForStudentModel model);
     }
 
     public class InsertNoteForStudent : IInsertNoteForStudent
@@ -27,14 +27,14 @@ namespace GradesFeature.AddNoteForStudentUseCase.Commands
             _mapper = mapper;
             _context = context;
         }
-        public int InsertNote(AddNoteForStudentModel model)
+        public async Task<int> InsertNote(AddNoteForStudentModel model)
         {
             var note = _mapper.Map<Note>(model);
             note.IssueDate = DateTime.Now;
             try
             {
-                _context.Notes.Add(note);
-                _context.SaveChanges();
+                await _context.Notes.AddAsync(note);
+                await _context.SaveChangesAsync();
 
 
                 NoteList noteList = new NoteList()
@@ -43,8 +43,8 @@ namespace GradesFeature.AddNoteForStudentUseCase.Commands
                     NotaId = note.Id
                 };
 
-                _context.NoteLists.Add(noteList);
-                _context.SaveChanges();
+                await _context.NoteLists.AddAsync(noteList);
+                await _context.SaveChangesAsync();
 
                 return note.Id;
             }

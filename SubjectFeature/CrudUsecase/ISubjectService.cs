@@ -4,9 +4,9 @@ namespace SubjectFeature.CrudUsecase
 {
     public interface ISubjectService
     {
-        bool CreateSubject(SubjectModel subjectModel);
-        bool DeleteSubject(int id);
-        Subject GetSubject(int id);
-        bool UpdateSubject(Subject subject);
+        Task<bool> CreateSubject(SubjectModel subjectModel);
+        Task<bool> DeleteSubject(int id);
+        Task<Subject> GetSubject(int id);
+        Task<bool> UpdateSubject(Subject subject);
     }
 }

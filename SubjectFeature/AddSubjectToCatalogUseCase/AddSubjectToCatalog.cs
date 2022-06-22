@@ -29,7 +29,7 @@ namespace SubjectFeature.AddSubjectToCatalogUseCase
             _subjectIdValidation = subjectIdValidation;
         }
 
-        public bool AddSubjectToTheCatalog(AddSubjectToCatalogModel request)
+        public async Task<bool> AddSubjectToTheCatalog(AddSubjectToCatalogModel request)
         {
             //1 Validate request
             ValidateRequest(request);
@@ -38,7 +38,7 @@ namespace SubjectFeature.AddSubjectToCatalogUseCase
             ValidateBusinessRules(request.CatalogID, request.MaterieID);
 
             //3 Insert into table
-            var entityId = InsertSubject(request);
+            var entityId = await InsertSubject(request);
 
             //4 Validate entityID
             ValidateSubjectCatalogID(entityId);
@@ -76,9 +76,9 @@ namespace SubjectFeature.AddSubjectToCatalogUseCase
                 throw new SubjectIdDoesNotExistsException($"No subject with id: {subjectID} exists in db!");
             }
         }
-        private int InsertSubject(AddSubjectToCatalogModel request)
+        private async Task<int> InsertSubject(AddSubjectToCatalogModel request)
         {
-            var id = _insertIntoSubjectCatalog.Insert(request);
+            var id = await _insertIntoSubjectCatalog.Insert(request);
 
             return id;
         }

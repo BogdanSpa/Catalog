@@ -3,6 +3,6 @@ namespace StudentFeature.GetNotesForSubjectByStudentUseCase
 {
     public interface IGetNotesForSubjectByStudent
     {
-        IQueryable<GetNotesForSubjectStudentModel> GetNotesForSubjectByStudentId(int studentID);
+        Task <IEnumerable<GetNotesForSubjectStudentModel>> GetNotesForSubjectByStudentId(int studentID);
     }
 }

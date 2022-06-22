@@ -9,6 +9,7 @@ namespace SubjectFeature.GetAllCatalogsForSubjectUseCase
     public class GetAllCatalogsForSubjectResponse
     {
         public string Clasa { get; set; }
+
         public bool Active { get; set; }
     }
 }

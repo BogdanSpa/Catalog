@@ -4,9 +4,9 @@ namespace GradesFeature.CrudUsecase
 {
     public interface INoteService
     {
-        bool CreateNote(Note nota);
-        bool DeleteNote(int id);
-        Note GetNote(int id);
-        bool UpdateNote(Student student);
+        Task<bool> CreateNote(Note nota);
+        Task<bool> DeleteNote(int id);
+        Task<Note> GetNote(int id);
+        Task<bool> UpdateNote(Student student);
     }
 }

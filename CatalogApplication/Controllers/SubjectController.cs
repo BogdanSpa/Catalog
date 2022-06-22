@@ -29,9 +29,9 @@ namespace CatalogApplication.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost("AddSubjectToCatalog")]
-        public IActionResult AddSubjectToCatalog(AddSubjectToCatalogModel model)
+        public async Task<IActionResult> AddSubjectToCatalog(AddSubjectToCatalogModel model)
         {
-            _addSubjectToCatalog.AddSubjectToTheCatalog(model);
+            await _addSubjectToCatalog.AddSubjectToTheCatalog(model);
             return Ok("Added");
         }
 
@@ -40,9 +40,9 @@ namespace CatalogApplication.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetAllCatalogsForSubjectId(int id)
+        public async Task<IActionResult> GetAllCatalogsForSubjectId(int id)
         {
-            var result = _getAllCatalogForSubject.GetAllCatalogsForSubjectId(id);
+            var result = await _getAllCatalogForSubject.GetAllCatalogsForSubjectId(id);
 
             return Ok(result);
         }
@@ -51,9 +51,9 @@ namespace CatalogApplication.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult CreateSubject(SubjectModel request)
+        public async Task<IActionResult> CreateSubject(SubjectModel request)
         {
-            var result = _subjectService.CreateSubject(request);
+            var result = await _subjectService.CreateSubject(request);
 
             return Created("api/Subject", request.Nume);
         }

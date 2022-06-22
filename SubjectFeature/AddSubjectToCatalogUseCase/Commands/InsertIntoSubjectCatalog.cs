@@ -13,7 +13,7 @@ namespace SubjectFeature.AddSubjectToCatalogUseCase.Commands
 {
     public interface IInsertIntoSubjectCatalog
     {
-        int Insert(AddSubjectToCatalogModel request);
+        Task<int> Insert(AddSubjectToCatalogModel request);
     }
 
     public class InsertIntoSubjectCatalog : IInsertIntoSubjectCatalog
@@ -30,14 +30,14 @@ namespace SubjectFeature.AddSubjectToCatalogUseCase.Commands
             _logger = logger;
         }
 
-        public int Insert(AddSubjectToCatalogModel request)
+        public async Task<int> Insert(AddSubjectToCatalogModel request)
         {
             var subjectCatalog = _mapper.Map<SubjectCatalog>(request);
 
             try
             {
-                _context.SubjectCatalogs.Add(subjectCatalog);
-                _context.SaveChanges();
+                await _context.SubjectCatalogs.AddAsync(subjectCatalog);
+                await _context.SaveChangesAsync();
                 return subjectCatalog.Id;
             }
             catch (Exception ex)

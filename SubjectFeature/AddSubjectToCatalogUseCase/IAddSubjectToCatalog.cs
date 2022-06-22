@@ -2,6 +2,6 @@
 {
     public interface IAddSubjectToCatalog
     {
-        bool AddSubjectToTheCatalog(AddSubjectToCatalogModel model);
+        Task<bool> AddSubjectToTheCatalog(AddSubjectToCatalogModel model);
     }
 }
